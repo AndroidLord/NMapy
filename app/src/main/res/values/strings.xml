@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Mapy</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="google_api">AIzaSyBNbR_Bdqi63lrpe0tWIycNXagdrkD-Ixc</string>
+</resources>
