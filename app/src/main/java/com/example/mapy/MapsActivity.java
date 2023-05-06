@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -55,6 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     FusedLocationProviderClient fusedLocationProviderClient;
     private final static int REQUEST_CODE = 100;
+    private static final int REQUEST_CODE_GPS = 1001;
 
 
     @Override
@@ -73,11 +75,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Setting Up Spinner
         settingUpSpinner();
 
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        checkGpsEnabled();
 
         // Setting up Map to get Current Location
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        getLastLocation();
+
+
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -158,6 +162,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    private void checkGpsEnabled() {
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (locationManager != null && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            // GPS is disabled, request the user to turn it on
+
+           showGPSDialog();
+
+
+        }else
+            getLastLocation();
+
+
+    }
+
+    private void showGPSDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Please enable GPS to use this app")
+                .setCancelable(false)
+                .setPositiveButton("Enable GPS", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        Intent gpsIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivityForResult(gpsIntent, REQUEST_CODE_GPS);
+
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     private void settingUpSpinner() {
 
         spinner = findViewById(R.id.spinner);
@@ -179,47 +214,70 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-            Task<Location> task = fusedLocationProviderClient.getLastLocation();
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                // GPS is enabled, request the user to turn it on
 
-            task.addOnSuccessListener(new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
 
-                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    MarkerOptions markerOptions = new MarkerOptions().position(latLng).draggable(true).title("Current Location");
+                Task<Location> task = fusedLocationProviderClient.getLastLocation();
 
-                    if (mMap != null) {
+                Log.d("gps", "Outside the task Listener");
 
-                        mMap.addMarker(markerOptions);
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
 
-                        binding.latitude.setText(String.valueOf(location.getLatitude()));
-                        binding.longitude.setText(String.valueOf(location.getLongitude()));
+                        Log.d("gps", "Inside the task Listener");
 
-                        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-                            @Override
-                            public void onMarkerDrag(@NonNull Marker marker) {
+                        if(location!=null){
 
+                            Log.d("gps", "onSuccess: Location isn't null");
+
+                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            MarkerOptions markerOptions = new MarkerOptions().position(latLng).draggable(true).title("Current Location");
+
+                            if (mMap != null) {
+
+                                Log.d("gps", "onSuccess: mMap isn't null");
+
+                                mMap.addMarker(markerOptions);
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
+                                binding.latitude.setText(String.valueOf(location.getLatitude()));
+                                binding.longitude.setText(String.valueOf(location.getLongitude()));
+
+                                mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+                                    @Override
+                                    public void onMarkerDrag(@NonNull Marker marker) {
+
+                                    }
+
+                                    @Override
+                                    public void onMarkerDragEnd(@NonNull Marker marker) {
+
+
+                                        binding.latitude.setText(String.valueOf(marker.getPosition().latitude));
+                                        binding.longitude.setText(String.valueOf(marker.getPosition().longitude));
+
+                                    }
+
+                                    @Override
+                                    public void onMarkerDragStart(@NonNull Marker marker) {
+
+                                    }
+                                });
                             }
-
-                            @Override
-                            public void onMarkerDragEnd(@NonNull Marker marker) {
-
-
-                                binding.latitude.setText(String.valueOf(marker.getPosition().latitude));
-                                binding.longitude.setText(String.valueOf(marker.getPosition().longitude));
-
+                            else{
+                                Log.d("gps", "onSuccess: mMap is Null");
                             }
+                        }
 
-                            @Override
-                            public void onMarkerDragStart(@NonNull Marker marker) {
-
-                            }
-                        });
                     }
+                });
 
-                }
-            });
+            }
+
+
 
         } else {
 
@@ -263,6 +321,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_GPS) {
+
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+            if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                // GPS is now enabled, continue with your app logic
+                Toast.makeText(this, "GPS has turned on", Toast.LENGTH_SHORT).show();
+
+                getLastLocation();
+            } else {
+                // GPS is still not enabled, show a message or take appropriate action
+                Toast.makeText(this, "Please Turn on Your GPS", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     /**
      * Manipulates the map once available.
