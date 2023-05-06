@@ -9,10 +9,57 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Kashi Yatra"
+        android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.097"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.04" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/aboutbutton"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:backgroundTint="@color/black"
+        android:text="About Page"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.272" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mapbutton"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:text="Map &amp; Remark"
+        app:cornerRadius="5dp"
+        android:backgroundTint="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dashboardButton"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:backgroundTint="@color/black"
+        android:text="Dashboard"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.729" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

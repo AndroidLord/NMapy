@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f9f9fa"
+    android:orientation="vertical"
+    tools:context=".MapsActivity">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#a8314d"
+        android:text="About Place"
+        android:textColor="@color/white"
+        android:textSize="30dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Mandir Name: "
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/mandirNameTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="Mandir Name Description..."
+            android:textSize="18dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="About Mandir: "
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/mandirDescriptionTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="@string/kashiManderDes"
+        android:textSize="18dp"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:text="Address"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/addressET"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_margin="5dp"
+        android:background="@drawable/edittext_darker_bg"
+        android:gravity="top"
+        android:padding="5dp"
+        android:text="Laohli, Varanasi, Uttar Pradesh 226010"
+        android:textSize="18dp"
+
+        />
+
+
+    <fragment
+        android:id="@+id/aboutMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="top"
+        android:layout_margin="5dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="bottom"
+
+            android:backgroundTint="#1466A8">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:progressBackgroundTint="@color/white"
+                    android:thumbTint="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/totalTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:layout_marginStart="13dp"
+                        android:text="0:05"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/currTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:gravity="end"
+                        android:layout_marginEnd="13dp"
+                        android:text="3:40"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+
+                        />
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_favorite_icon"
+                        android:scaleType="fitCenter"
+
+                        />
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_skip_previous_icon"
+                        android:scaleType="fitCenter"
+
+                        /> <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/ic_pause_icon"
+                    android:scaleType="fitCenter"
+
+                    /> <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:src="@drawable/ic_skip_next_icon"
+                    android:scaleType="fitCenter"
+
+                    />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="35dp"
+                        android:layout_weight="1"
+                        android:layout_marginStart="5dp"
+                        android:src="@drawable/ic_star_icon"
+                        android:scaleType="fitCenter"
+
+                        />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+</ScrollView>
