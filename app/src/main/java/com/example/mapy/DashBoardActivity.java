@@ -3,6 +3,7 @@ package com.example.mapy;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -49,6 +50,13 @@ public class DashBoardActivity extends AppCompatActivity {
 
 
         binding.recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+
+        if (getResources().getConfiguration().orientation==2){
+            binding.recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+
+        }
+
+
         DashboardAdaptor dashboardAdaptor = new DashboardAdaptor(modelArrayList,DashBoardActivity.this);
         binding.recyclerView.setAdapter(dashboardAdaptor);
 
