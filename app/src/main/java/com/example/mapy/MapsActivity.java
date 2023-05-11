@@ -220,7 +220,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         spinner = findViewById(R.id.spinner);
 
-        String[] category = {"Mandir", "Petrol Pump", "Beauty Parlour"};
+        String[] category = {"Mandir", "Majid", "Petrol Pump"};
 
         // Initialize the Spinner with an adapter
 

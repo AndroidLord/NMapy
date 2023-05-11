@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.mapy.databinding.ActivityAboutPlaceBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,7 +16,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class AboutPlaceActivity extends FragmentActivity implements OnMapReadyCallback {
+public class AboutPlaceActivity extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private ActivityAboutPlaceBinding binding;
     private GoogleMap mMap;
@@ -29,6 +30,20 @@ public class AboutPlaceActivity extends FragmentActivity implements OnMapReadyCa
 
         binding = ActivityAboutPlaceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+        // like Buttons
+        binding.unlikedFavouriteButton.setOnClickListener(this);
+        binding.likedFavouriteButton.setOnClickListener(this);
+
+        // Play/Pause Buttons
+        binding.playButton.setOnClickListener(this);
+        binding.pauseButton.setOnClickListener(this);
+
+        // star Buttons
+        binding.likedStarButton.setOnClickListener(this);
+        binding.unlikedStarButton.setOnClickListener(this);
+
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -53,8 +68,39 @@ public class AboutPlaceActivity extends FragmentActivity implements OnMapReadyCa
 
         marker = mMap.addMarker(markerOptions);
 
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(aboutPlaceLocation,13f));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(aboutPlaceLocation, 13f));
 
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
+
+        if (v.getId() == R.id.unlikedFavouriteButton) {
+            binding.unlikedFavouriteButton.setVisibility(View.GONE);
+            binding.likedFavouriteButton.setVisibility(View.VISIBLE);
+        }
+        else if (v.getId() == R.id.likedFavouriteButton) {
+            binding.likedFavouriteButton.setVisibility(View.GONE);
+            binding.unlikedFavouriteButton.setVisibility(View.VISIBLE);
+        }
+        else if (v.getId() == R.id.playButton) {
+            binding.playButton.setVisibility(View.GONE);
+            binding.pauseButton.setVisibility(View.VISIBLE);
+        }
+        else if (v.getId() == R.id.pauseButton) {
+            binding.pauseButton.setVisibility(View.GONE);
+            binding.playButton.setVisibility(View.VISIBLE);
+        }
+        else if (v.getId() == R.id.unlikedStarButton) {
+            binding.unlikedStarButton.setVisibility(View.GONE);
+            binding.likedStarButton.setVisibility(View.VISIBLE);
+        }
+        else if (v.getId() == R.id.likedStarButton) {
+            binding.likedStarButton.setVisibility(View.GONE);
+            binding.unlikedStarButton.setVisibility(View.VISIBLE);
+        }
 
 
     }
