@@ -17,13 +17,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class AboutPlaceActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    ActivityAboutPlaceBinding binding;
-
+    private ActivityAboutPlaceBinding binding;
     private GoogleMap mMap;
     private Marker marker;
     private LatLng aboutPlaceLocation;
-
-
 
 
     @Override
@@ -36,6 +33,7 @@ public class AboutPlaceActivity extends FragmentActivity implements OnMapReadyCa
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.aboutMap);
+
         mapFragment.getMapAsync(this);
 
 

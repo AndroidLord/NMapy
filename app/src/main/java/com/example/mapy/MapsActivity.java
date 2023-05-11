@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -66,21 +67,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+
 
 
         // Setting Up Spinner
         settingUpSpinner();
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
         checkGpsEnabled();
 
         // Setting up Map to get Current Location
 
+    binding.refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
 
+
+            checkGpsEnabled();
+            binding.refreshLayout.setRefreshing(false);
+        }
+    });
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -160,19 +168,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     private void checkGpsEnabled() {
 
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (locationManager != null && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            // GPS is disabled, request the user to turn it on
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
-           showGPSDialog();
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            if (locationManager != null && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                // GPS is disabled, request the user to turn it on
+
+                showGPSDialog();
 
 
-        }else
-            getLastLocation();
+            }
+            else
+                getLastLocation();
+
+        }
+        else{
+            askPermission();
+        }
+
+
 
 
     }
@@ -218,8 +241,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 // GPS is enabled, request the user to turn it on
 
-
                 Task<Location> task = fusedLocationProviderClient.getLastLocation();
+
 
                 Log.d("gps", "Outside the task Listener");
 
@@ -228,6 +251,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onSuccess(Location location) {
 
                         Log.d("gps", "Inside the task Listener");
+                        Log.d("gps", "Location is " + location);
 
                         if(location!=null){
 
@@ -235,6 +259,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
                             MarkerOptions markerOptions = new MarkerOptions().position(latLng).draggable(true).title("Current Location");
+
+
 
                             if (mMap != null) {
 
@@ -271,10 +297,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 Log.d("gps", "onSuccess: mMap is Null");
                             }
                         }
+                        else{
+                            // Location is null
+
+
+                        }
 
                     }
                 });
 
+            }
+            else{
+                showGPSDialog();
             }
 
 
@@ -303,13 +337,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (requestCode == REQUEST_CODE) {
 
+            Log.d("gps", "Outside onRequestPermissionsResult of Location Permission: ");
+
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-
-                getLastLocation();
+                Log.d("gps", "Inside onRequestPermissionsResult of Location Permission: ");
+                checkGpsEnabled();
 
             } else {
-
 
                 Toast.makeText(MapsActivity.this, "Please Provide The Required Permission", Toast.LENGTH_SHORT).show();
 
@@ -324,35 +359,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == REQUEST_CODE_GPS) {
+
+            Log.d("gps", "Outside onActivityResult of GPS Permission: ");
 
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
             if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 // GPS is now enabled, continue with your app logic
+                Log.d("gps", "Inside onActivityResult of GPS Permission: ");
                 Toast.makeText(this, "GPS has turned on", Toast.LENGTH_SHORT).show();
-
+                Log.d("gps", "Going to get the last location");
                 getLastLocation();
             } else {
                 // GPS is still not enabled, show a message or take appropriate action
+                Log.d("gps", "Please Turn on GPS, Inside of onActivityResult of GPS Permission: ");
                 Toast.makeText(this, "Please Turn on Your GPS", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.d("gps", " Inside onMapReady: and mMap is Empty");
+
         mMap = googleMap;
 
+        Log.d("gps", " Inside onMapReady: and mMap has value");
 //        LatLng lucknow = new LatLng(26.8467, 80.9462);
 //        marker = mMap.addMarker(new MarkerOptions().position(lucknow).draggable(true).title("Marker 1"));
 

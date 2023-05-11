@@ -1,59 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".DashBoardActivity">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:contentScrim="@color/red"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            >
 
-       <TextView
-           android:layout_width="match_parent"
-           android:layout_height="250dp"
-           android:text=" DashBoard"
-           android:background="@drawable/dashboard_gradient"
-           android:textColor="@color/white"
-           android:paddingTop="10dp"
-           android:textStyle="bold"
-           android:textSize="30dp"/>
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/image_slider"
+                android:layout_width="match_parent"
+                app:iss_no_dots="true"
+                android:scrollbarSize="5dp"
+                android:layout_height="300dp"
+                app:iss_auto_cycle="true"
+                app:iss_period="2000"
+                app:iss_delay="0" />
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="50dp"
-           android:gravity="center"
-           >
-           <com.denzcoskun.imageslider.ImageSlider
-               android:id="@+id/image_slider"
-               android:layout_width="match_parent"
-               android:layout_height="200dp"
-               app:iss_auto_cycle="true"
-               app:iss_period="2000"
-               app:iss_delay="0" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                />
 
-       </LinearLayout>
 
-   </RelativeLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/dashboard_list_item"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
 
 
-</LinearLayout>
 
-
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -20,10 +20,17 @@ public class DashboardAdaptor extends RecyclerView.Adapter<DashboardAdaptor.View
     private ArrayList<DashBoardModel> list;
     private Context context;
 
-    public DashboardAdaptor(ArrayList<DashBoardModel> list, Context context) {
+    private DashAdaptorOnClickListener dashAdaptorOnClickListener;
+
+    public DashboardAdaptor(ArrayList<DashBoardModel> list, Context context, DashAdaptorOnClickListener dashAdaptorOnClickListener) {
         this.list = list;
         this.context = context;
+        this.dashAdaptorOnClickListener = dashAdaptorOnClickListener;
     }
+
+//    public DashboardAdaptor(DashAdaptorOnClickListener dashAdaptorOnClickListener) {
+//        this.dashAdaptorOnClickListener = dashAdaptorOnClickListener;
+//    }
 
     @NonNull
     @Override
@@ -39,6 +46,15 @@ public class DashboardAdaptor extends RecyclerView.Adapter<DashboardAdaptor.View
 
         holder.imageView.setImageResource(dashBoardModel.getImage());
         holder.nameTV.setText(dashBoardModel.getName());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dashAdaptorOnClickListener.onClick(holder.getAdapterPosition());
+
+            }
+        });
 
     }
 
