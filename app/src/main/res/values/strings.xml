@@ -3,6 +3,11 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="google_api">AIzaSyBNbR_Bdqi63lrpe0tWIycNXagdrkD-Ixc</string>
 
+    <string name="google_api2">AIzaSyDqIyOiIADAGfFyNTUTvgrv2VDDU7R4-4M</string>
+    <string name="google_places_api2">AIzaSyDRxg2JNiAQaORroerqF9tFSNB1VnNn5AM</string>
+
     <string name="kashiManderDes">Kashi Yatra Mandir is a prominent Hindu temple located in the city of Varanasi, India. The temple is dedicated to Lord Shiva and is considered one of the most important pilgrimage sites for Hindus. The temple\'s architecture and design reflect the rich cultural heritage of India and attract a large number of visitors every year.</string>
+
+    <string name="title_activity_route_maps">RouteMapsActivity</string>
 
 </resources>

@@ -107,6 +107,7 @@ public class DashBoardActivity extends AppCompatActivity implements DashAdaptorO
         modelArrayList.add(new DashBoardModel(R.drawable.customerexperience,"Customer Experience"));
         modelArrayList.add(new DashBoardModel(R.drawable.place,"Add POI"));
         modelArrayList.add(new DashBoardModel(R.drawable.addpointer,"About Mandir"));
+        modelArrayList.add(new DashBoardModel(R.drawable.route,"Route"));
 
         return modelArrayList;
 
@@ -125,6 +126,11 @@ public class DashBoardActivity extends AppCompatActivity implements DashAdaptorO
         } else if(dashBoardModel.getName().equals("About Mandir")){
 
             startActivity(new Intent(context,AboutPlaceActivity.class));
+
+        }else if(dashBoardModel.getName().equals("Route")){
+
+            startActivity(new Intent(context,RouteMapsActivity.class));
+
 
         }
 

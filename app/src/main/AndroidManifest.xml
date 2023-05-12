@@ -16,19 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mapy"
         tools:targetApi="31">
-        <activity
-            android:name=".DashBoardActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-        <activity
-            android:name=".AboutPlaceActivity"
-            android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -42,17 +30,31 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBNbR_Bdqi63lrpe0tWIycNXagdrkD-Ixc" />
+            android:value="AIzaSyDqIyOiIADAGfFyNTUTvgrv2VDDU7R4-4M" />
 
+        <activity
+            android:name=".RouteMapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_route_maps" />
+        <activity
+            android:name=".DashBoardActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AboutPlaceActivity"
+            android:exported="false" />
         <activity
             android:name=".MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
