@@ -109,6 +109,7 @@ public class DashBoardActivity extends AppCompatActivity implements DashAdaptorO
         modelArrayList.add(new DashBoardModel(R.drawable.addpointer,"About Mandir"));
         modelArrayList.add(new DashBoardModel(R.drawable.route,"Route"));
 
+        modelArrayList.add(new DashBoardModel(R.drawable.qrcodescan,"QR Scanner"));
         return modelArrayList;
 
     }
@@ -130,6 +131,12 @@ public class DashBoardActivity extends AppCompatActivity implements DashAdaptorO
         }else if(dashBoardModel.getName().equals("Route")){
 
             startActivity(new Intent(context,RouteMapsActivity.class));
+
+
+        }
+        else if(dashBoardModel.getName().equals("QR Scanner")){
+
+            startActivity(new Intent(context,QrScannerActivity.class));
 
 
         }
