@@ -57,7 +57,7 @@ public class RouteMapsActivity extends FragmentActivity implements OnMapReadyCal
     private ProgressDialog mProgressDialog;
 
     private static final String BASE_URL = "https://maps.googleapis.com/maps/api/directions/json";
-    private static String API_KEY="AIzaSyDRxg2JNiAQaORroerqF9tFSNB1VnNn5AM";
+    private static String API_KEY = "AIzaSyDRxg2JNiAQaORroerqF9tFSNB1VnNn5AM";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
