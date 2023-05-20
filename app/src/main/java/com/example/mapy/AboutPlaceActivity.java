@@ -4,10 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.mapy.databinding.ActivityAboutPlaceBinding;
+import com.example.mapy.models.TempleModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,6 +25,7 @@ public class AboutPlaceActivity extends FragmentActivity implements OnMapReadyCa
     private GoogleMap mMap;
     private Marker marker;
     private LatLng aboutPlaceLocation;
+    TempleModel templeModel;
 
 
     @Override
@@ -31,6 +35,17 @@ public class AboutPlaceActivity extends FragmentActivity implements OnMapReadyCa
         binding = ActivityAboutPlaceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Intent returnIntent = getIntent();
+
+        templeModel = returnIntent.getExtras().getParcelable("templeObj");
+
+        if (templeModel != null) {
+            binding.mandirNameTV.setText(templeModel.getName());
+            aboutPlaceLocation = new LatLng(templeModel.getLatitude(), templeModel.getLongitude());
+        } else {
+            Toast.makeText(this, "Some Error Occurred", Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
         // like Buttons
         binding.unlikedFavouriteButton.setOnClickListener(this);
@@ -59,12 +74,12 @@ public class AboutPlaceActivity extends FragmentActivity implements OnMapReadyCa
 
         mMap = googleMap;
 
-        aboutPlaceLocation = new LatLng(25.3176, 82.9739);
+        //aboutPlaceLocation = new LatLng(25.3176, 82.9739);
 
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(aboutPlaceLocation);
         markerOptions.draggable(true);
-        markerOptions.title("Near Varanasi");
+        markerOptions.title(templeModel.getName());
 
         marker = mMap.addMarker(markerOptions);
 
@@ -80,24 +95,19 @@ public class AboutPlaceActivity extends FragmentActivity implements OnMapReadyCa
         if (v.getId() == R.id.unlikedFavouriteButton) {
             binding.unlikedFavouriteButton.setVisibility(View.GONE);
             binding.likedFavouriteButton.setVisibility(View.VISIBLE);
-        }
-        else if (v.getId() == R.id.likedFavouriteButton) {
+        } else if (v.getId() == R.id.likedFavouriteButton) {
             binding.likedFavouriteButton.setVisibility(View.GONE);
             binding.unlikedFavouriteButton.setVisibility(View.VISIBLE);
-        }
-        else if (v.getId() == R.id.playButton) {
+        } else if (v.getId() == R.id.playButton) {
             binding.playButton.setVisibility(View.GONE);
             binding.pauseButton.setVisibility(View.VISIBLE);
-        }
-        else if (v.getId() == R.id.pauseButton) {
+        } else if (v.getId() == R.id.pauseButton) {
             binding.pauseButton.setVisibility(View.GONE);
             binding.playButton.setVisibility(View.VISIBLE);
-        }
-        else if (v.getId() == R.id.unlikedStarButton) {
+        } else if (v.getId() == R.id.unlikedStarButton) {
             binding.unlikedStarButton.setVisibility(View.GONE);
             binding.likedStarButton.setVisibility(View.VISIBLE);
-        }
-        else if (v.getId() == R.id.likedStarButton) {
+        } else if (v.getId() == R.id.likedStarButton) {
             binding.likedStarButton.setVisibility(View.GONE);
             binding.unlikedStarButton.setVisibility(View.VISIBLE);
         }

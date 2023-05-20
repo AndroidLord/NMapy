@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#a8314d"
+        android:background="@color/red"
         android:text="About Place"
         android:textColor="@color/white"
         android:textSize="30dp" />
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:hint="Mandir Name Description..."
+            android:hint="Mandir Name"
             android:textSize="18dp" />
 
     </LinearLayout>

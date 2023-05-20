@@ -2,41 +2,32 @@ package com.example.mapy;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ContentInfoCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.widget.Toast;
 
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.AnimationTypes;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.mapy.adaptor.DashAdaptorOnClickListener;
+import com.example.mapy.adaptor.AdaptorOnClickListener;
 import com.example.mapy.adaptor.DashboardAdaptor;
 import com.example.mapy.databinding.ActivityDashBoardBinding;
-import com.example.mapy.databinding.DashboardListItemBinding;
 import com.example.mapy.models.DashBoardModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class DashBoardActivity extends AppCompatActivity implements DashAdaptorOnClickListener {
+public class DashBoardActivity extends AppCompatActivity implements AdaptorOnClickListener {
 
     Context context = this;
    ActivityDashBoardBinding binding;
 
-   DashAdaptorOnClickListener dashAdaptorOnClickListener;
+   AdaptorOnClickListener adaptorOnClickListener;
     ArrayList<DashBoardModel> modelArrayList;
 
     @Override
@@ -98,7 +89,7 @@ public class DashBoardActivity extends AppCompatActivity implements DashAdaptorO
     private ArrayList<DashBoardModel> SettingUpDashBoard() {
 
         modelArrayList = new ArrayList<>();
-        modelArrayList.add(new DashBoardModel(R.drawable.god,"Ghat Arti"));
+        modelArrayList.add(new DashBoardModel(R.drawable.god,"Yatra"));
         modelArrayList.add(new DashBoardModel(R.drawable.travel,"Book Vehical"));
         modelArrayList.add(new DashBoardModel(R.drawable.tourists,"Travel Destination"));
         modelArrayList.add(new DashBoardModel(R.drawable.gallery,"Varanasi Photos"));
@@ -106,7 +97,6 @@ public class DashBoardActivity extends AppCompatActivity implements DashAdaptorO
         modelArrayList.add(new DashBoardModel(R.drawable.technicalsupport,"Support"));
         modelArrayList.add(new DashBoardModel(R.drawable.customerexperience,"Customer Experience"));
         modelArrayList.add(new DashBoardModel(R.drawable.place,"Add POI"));
-        modelArrayList.add(new DashBoardModel(R.drawable.addpointer,"About Mandir"));
         modelArrayList.add(new DashBoardModel(R.drawable.route,"Route"));
 
         modelArrayList.add(new DashBoardModel(R.drawable.qrcodescan,"QR Scanner"));
@@ -137,6 +127,11 @@ public class DashBoardActivity extends AppCompatActivity implements DashAdaptorO
         else if(dashBoardModel.getName().equals("QR Scanner")){
 
             startActivity(new Intent(context,QrScannerActivity.class));
+
+
+        }else if(dashBoardModel.getName().equals("Yatra")){
+
+            startActivity(new Intent(context,YatraActivity.class));
 
 
         }

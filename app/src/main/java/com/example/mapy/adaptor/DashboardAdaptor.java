@@ -20,12 +20,12 @@ public class DashboardAdaptor extends RecyclerView.Adapter<DashboardAdaptor.View
     private ArrayList<DashBoardModel> list;
     private Context context;
 
-    private DashAdaptorOnClickListener dashAdaptorOnClickListener;
+    private AdaptorOnClickListener adaptorOnClickListener;
 
-    public DashboardAdaptor(ArrayList<DashBoardModel> list, Context context, DashAdaptorOnClickListener dashAdaptorOnClickListener) {
+    public DashboardAdaptor(ArrayList<DashBoardModel> list, Context context, AdaptorOnClickListener adaptorOnClickListener) {
         this.list = list;
         this.context = context;
-        this.dashAdaptorOnClickListener = dashAdaptorOnClickListener;
+        this.adaptorOnClickListener = adaptorOnClickListener;
     }
 
 //    public DashboardAdaptor(DashAdaptorOnClickListener dashAdaptorOnClickListener) {
@@ -51,7 +51,7 @@ public class DashboardAdaptor extends RecyclerView.Adapter<DashboardAdaptor.View
             @Override
             public void onClick(View v) {
 
-                dashAdaptorOnClickListener.onClick(holder.getAdapterPosition());
+                adaptorOnClickListener.onClick(holder.getAdapterPosition());
 
             }
         });

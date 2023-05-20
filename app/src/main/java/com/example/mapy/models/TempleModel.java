@@ -1,38 +1,49 @@
 package com.example.mapy.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.maps.model.LatLng;
 
-public class TempleModel {
+public class TempleModel implements Parcelable {
 
-    String latitude,longitude,name,id;
+    String name,id;
+
+    double latitude,longitude;
     int image;
 
     public TempleModel() {
     }
 
-    public TempleModel(String latitude, String longitude, String name, String id, int image) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public TempleModel(double latitude, double longitude, String id,String name,  int image) {
         this.name = name;
         this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.image = image;
     }
 
-    public String getLatitude() {
-        return latitude;
+    protected TempleModel(Parcel in) {
+        name = in.readString();
+        id = in.readString();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
+        image = in.readInt();
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
+    public static final Creator<TempleModel> CREATOR = new Creator<TempleModel>() {
+        @Override
+        public TempleModel createFromParcel(Parcel in) {
+            return new TempleModel(in);
+        }
 
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
+        @Override
+        public TempleModel[] newArray(int size) {
+            return new TempleModel[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -50,11 +61,41 @@ public class TempleModel {
         this.id = id;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     public int getImage() {
         return image;
     }
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(id);
+        dest.writeDouble(latitude);
+        dest.writeDouble(longitude);
+        dest.writeInt(image);
     }
 }

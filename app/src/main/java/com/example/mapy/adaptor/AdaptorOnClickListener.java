@@ -1,6 +1,6 @@
 package com.example.mapy.adaptor;
 
-public interface DashAdaptorOnClickListener {
+public interface AdaptorOnClickListener {
 
     void onClick(int position);
 
